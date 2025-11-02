@@ -78,12 +78,12 @@ Leia o `composer.json` e adicione na seção `scripts`:
 
 **Importante:** Se já existir `post-update-cmd`, apenas adicione `"@php artisan boost:update --ansi"` ao array existente.
 
-### 6. Instalar Guidelines Padrão (Recomendado)
+### 6. Instalar Guidelines Padrão (Automático)
 
-Pergunte ao usuário se ele deseja instalar os **guidelines padrão** para Laravel:
+Informe ao usuário que você vai instalar os **guidelines padrão** para Laravel:
 
 ```
-Deseja instalar os guidelines padrão para desenvolvimento Laravel?
+📥 Instalando guidelines padrão para desenvolvimento Laravel...
 
 Estes guidelines ensinam o Claude sobre:
 - Arquitetura (Actions, Services, DTOs, Events, Jobs)
@@ -100,9 +100,7 @@ Estes guidelines ensinam o Claude sobre:
 Total: ~213 KB de conhecimento detalhado sobre boas práticas Laravel.
 ```
 
-**Se o usuário aceitar:**
-
-Crie o diretório e faça download dos guidelines:
+**Crie o diretório e faça download dos guidelines automaticamente:**
 
 ```bash
 mkdir -p .ai/guidelines
@@ -227,37 +225,42 @@ Estes guidelines agora serão **automaticamente carregados pelo Claude** toda ve
 - Edite os arquivos em `.ai/guidelines/` conforme necessário
 - Adicione novos guidelines específicos do seu domínio
 
-### 7. Copiar Guidelines Locais (Opcional)
+### 7. Verificar Guidelines Locais (Opcional)
 
-**Se existir diretório `guidelines/` no projeto:**
-
-Pergunte ao usuário se ele quer copiar/mesclar guidelines locais:
+**Verifique se existe diretório `guidelines/` no projeto:**
 
 ```bash
 ls -la guidelines/ 2>/dev/null
 ```
 
-Se encontrar, pergunte:
+**Se encontrar guidelines locais:**
+
+Pergunte ao usuário se ele quer copiar/mesclar com os guidelines padrão já instalados:
 
 ```
+✅ Guidelines padrão já instalados!
+
 Encontrei guidelines personalizados em 'guidelines/'.
-Deseja copiá-los para '.ai/guidelines/' (sobrescrevendo os padrão)?
-Ou prefere mantê-los separados?
+Deseja copiá-los também para '.ai/guidelines/' para complementar os guidelines padrão?
+
+Opções:
+1. Sim - Copiar e mesclar (sobrescreve arquivos com mesmo nome)
+2. Não - Manter apenas os guidelines padrão
 ```
 
-Se sim:
+**Se o usuário aceitar copiar:**
 ```bash
+echo "📥 Copiando guidelines locais..."
 cp guidelines/*.md .ai/guidelines/ 2>/dev/null || true
 cp guidelines/*.blade.php .ai/guidelines/ 2>/dev/null || true
+echo "✅ Guidelines locais mesclados!"
 ```
 
-### 8. Criar Guidelines Personalizados (Opcional)
+### 8. Adicionar Guidelines Personalizados (Opcional)
 
-**Se o usuário NÃO quiser os guidelines padrão:**
+**Os guidelines padrão já foram instalados.** Agora você pode adicionar guidelines personalizados adicionais se necessário.
 
-Pergunte ao usuário se ele quer criar guidelines personalizados para o projeto.
-
-Se sim, crie o diretório `.ai/guidelines/` e explique que ele pode adicionar:
+Informe ao usuário que ele pode adicionar mais guidelines específicos do projeto em `.ai/guidelines/`:
 
 - Arquivos `.md` ou `.blade.php` com instruções específicas do projeto
 - Padrões de código da equipe

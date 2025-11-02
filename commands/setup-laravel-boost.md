@@ -83,21 +83,16 @@ Leia o `composer.json` e adicione na seção `scripts`:
 Informe ao usuário que você vai instalar os **guidelines padrão** para Laravel:
 
 ```
-📥 Instalando guidelines padrão para desenvolvimento Laravel...
+📥 Instalando guidelines essenciais para desenvolvimento Laravel...
 
 Estes guidelines ensinam o Claude sobre:
-- Arquitetura (Actions, Services, DTOs, Events, Jobs)
-- Estilo de código e convenções
+- Arquitetura (Actions, Services, DTOs)
+- Estilo de código e convenções (PSR-12, Laravel Pint)
 - Padrões para Models Eloquent
-- Convenções de migrations
-- Regras de validação
-- Estrutura de Resources (Filament)
-- Padrões do Filament
-- Componentes Livewire/Blade
-- Estratégia de testes
-- Convenções de commits
+- Padrões do Filament (Resources, Forms, Tables)
+- Regras de validação (Form Requests)
 
-Total: ~213 KB de conhecimento detalhado sobre boas práticas Laravel.
+Total: ~22 KB de guidelines essenciais e otimizados para performance.
 ```
 
 **Crie o diretório e faça download dos guidelines automaticamente:**
@@ -105,24 +100,19 @@ Total: ~213 KB de conhecimento detalhado sobre boas práticas Laravel.
 ```bash
 mkdir -p .ai/guidelines
 
-# URLs do Gist com guidelines
-GIST_USER="danie1net0"
-GIST_ID="2f368df03376a4b6de066cf459660b08"
-BASE_URL="https://gist.githubusercontent.com/$GIST_USER/$GIST_ID/raw"
+# URLs do repositório com guidelines
+REPO="danie1net0/laravel-claude-commands"
+BRANCH="main"
+BASE_URL="https://raw.githubusercontent.com/$REPO/$BRANCH/guidelines"
 
 echo "📥 Baixando guidelines..."
 
-# Download de todos os guidelines do Gist
+# Download dos guidelines essenciais
 curl -fsSL "$BASE_URL/architecture.md" -o .ai/guidelines/architecture.md
 curl -fsSL "$BASE_URL/code-style.md" -o .ai/guidelines/code-style.md
 curl -fsSL "$BASE_URL/models.md" -o .ai/guidelines/models.md
-curl -fsSL "$BASE_URL/migrations.md" -o .ai/guidelines/migrations.md
-curl -fsSL "$BASE_URL/validation.md" -o .ai/guidelines/validation.md
-curl -fsSL "$BASE_URL/resources.md" -o .ai/guidelines/resources.md
 curl -fsSL "$BASE_URL/filament.md" -o .ai/guidelines/filament.md
-curl -fsSL "$BASE_URL/components.md" -o .ai/guidelines/components.md
-curl -fsSL "$BASE_URL/tests.md" -o .ai/guidelines/tests.md
-curl -fsSL "$BASE_URL/commits.md" -o .ai/guidelines/commits.md
+curl -fsSL "$BASE_URL/validation.md" -o .ai/guidelines/validation.md
 
 echo "✅ Guidelines instalados!"
 ```
@@ -136,65 +126,34 @@ ls -lh .ai/guidelines/
 **Mostre ao usuário um resumo:**
 
 ```
-✅ 10 guidelines instalados com sucesso!
+✅ 5 guidelines essenciais instalados com sucesso!
 
-📄 architecture.md (25 KB)
-   - Actions, Services, DTOs, Traits
-   - Observers, Jobs, Events/Listeners
-   - Enums, Helpers
+📄 architecture.md (3.8 KB)
+   - Actions, Services, DTOs
    - Estrutura de diretórios
    - Regras de decisão (onde colocar código)
 
-📄 code-style.md (22 KB)
-   - Nomenclatura de classes, métodos, variáveis
+📄 code-style.md (3.4 KB)
    - PSR-12 e Laravel Pint
-   - Organização de imports
+   - Nomenclatura (classes, métodos, variáveis)
    - Type hints e strict types
 
-📄 models.md (31 KB)
+📄 models.md (4.6 KB)
    - Estrutura e organização de Models
-   - Relationships e Scopes
-   - Casts, Mutators e Accessors
+   - Relationships, Scopes, Casts
    - Query Builders personalizados
-   - Factories e Observers
 
-📄 migrations.md (19 KB)
-   - Nomenclatura e estrutura
-   - Foreign keys e indexes
-   - Modificações de schema
-   - Seeding
+📄 filament.md (4.9 KB)
+   - Estrutura de Resources
+   - Forms, Tables, Actions
+   - DTOs e Actions para lógica
 
-📄 validation.md (24 KB)
-   - Form Requests
-   - Custom validation rules
-   - Validação condicional
-   - Mensagens de erro
+📄 validation.md (5.0 KB)
+   - Form Requests obrigatórios
+   - Rules principais
+   - Mensagens em português
 
-📄 resources.md (20 KB)
-   - Estrutura de Resources (Filament)
-   - Forms e Tables
-   - Actions e Bulk Actions
-   - Relationships
-
-📄 filament.md (21 KB)
-   - Panel configuration
-   - Custom Pages e Widgets
-   - Actions e Notifications
-   - Multi-tenancy
-
-📄 components.md (16 KB)
-   - Componentes Livewire/Blade
-   - Props, Events e Slots
-   - Reusabilidade
-
-📄 tests.md (13 KB)
-   - Pest configuration
-   - Feature, Unit e Architecture tests
-   - Database testing e Mocking
-
-📄 commits.md (2 KB)
-   - Conventional Commits
-   - Message format e tipos
+Total: ~22 KB (otimizado para performance, sem alertas de tamanho)
 ```
 
 Informe ao usuário:

@@ -90,9 +90,12 @@ Estes guidelines ensinam o Claude sobre:
 - Estilo de código e convenções (PSR-12, Laravel Pint)
 - Padrões para Models Eloquent
 - Padrões do Filament (Resources, Forms, Tables)
-- Regras de validação (Form Requests)
+- Regras de validação (Form Requests SEMPRE obrigatórios)
+- API Resources (SEMPRE usar, exceto respostas muito simples)
+- Testes com Pest (expectations encadeadas, factories)
+- Commits (Conventional Commits)
 
-Total: ~22 KB de guidelines essenciais e otimizados para performance.
+Total: ~30 KB de guidelines essenciais e otimizados para performance.
 ```
 
 **Crie o diretório e faça download dos guidelines automaticamente:**
@@ -113,6 +116,9 @@ curl -fsSL "$BASE_URL/code-style.md" -o .ai/guidelines/code-style.md
 curl -fsSL "$BASE_URL/models.md" -o .ai/guidelines/models.md
 curl -fsSL "$BASE_URL/filament.md" -o .ai/guidelines/filament.md
 curl -fsSL "$BASE_URL/validation.md" -o .ai/guidelines/validation.md
+curl -fsSL "$BASE_URL/api.md" -o .ai/guidelines/api.md
+curl -fsSL "$BASE_URL/tests.md" -o .ai/guidelines/tests.md
+curl -fsSL "$BASE_URL/commits.md" -o .ai/guidelines/commits.md
 
 echo "✅ Guidelines instalados!"
 ```
@@ -126,34 +132,34 @@ ls -lh .ai/guidelines/
 **Mostre ao usuário um resumo:**
 
 ```
-✅ 5 guidelines essenciais instalados com sucesso!
+✅ 8 guidelines essenciais instalados com sucesso!
 
 📄 architecture.md (3.8 KB)
    - Actions, Services, DTOs
-   - Estrutura de diretórios
    - Regras de decisão (onde colocar código)
 
 📄 code-style.md (3.4 KB)
-   - PSR-12 e Laravel Pint
-   - Nomenclatura (classes, métodos, variáveis)
-   - Type hints e strict types
+   - PSR-12, nomenclatura, type hints
 
 📄 models.md (4.6 KB)
-   - Estrutura e organização de Models
    - Relationships, Scopes, Casts
-   - Query Builders personalizados
 
 📄 filament.md (4.9 KB)
-   - Estrutura de Resources
-   - Forms, Tables, Actions
-   - DTOs e Actions para lógica
+   - Resources, Forms, Tables
 
 📄 validation.md (5.0 KB)
-   - Form Requests obrigatórios
-   - Rules principais
-   - Mensagens em português
+   - Form Requests (SEMPRE obrigatórios)
 
-Total: ~22 KB (otimizado para performance, sem alertas de tamanho)
+📄 api.md (4.5 KB)
+   - API Resources (SEMPRE usar)
+
+📄 tests.md (4.8 KB)
+   - Pest, expectations encadeadas, factories
+
+📄 commits.md (0.6 KB)
+   - Conventional Commits
+
+Total: ~31 KB (otimizado para performance, sem alertas)
 ```
 
 Informe ao usuário:

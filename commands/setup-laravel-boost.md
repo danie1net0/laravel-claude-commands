@@ -119,8 +119,8 @@ curl -fsSL "$BASE_URL/api.md" -o .ai/guidelines/api.md
 curl -fsSL "$BASE_URL/tests.md" -o .ai/guidelines/tests.md
 curl -fsSL "$BASE_URL/commits.md" -o .ai/guidelines/commits.md
 
-# Verificar se Filament está instalado
-if composer show filament/filament &>/dev/null; then
+# Verificar se Filament está instalado (v3 ou v4)
+if composer show filament/filament &>/dev/null || composer show | grep -q "filament/"; then
     echo "🔍 Filament detectado - baixando guideline do Filament..."
     curl -fsSL "$BASE_URL/filament.md" -o .ai/guidelines/filament.md
 fi

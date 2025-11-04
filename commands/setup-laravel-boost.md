@@ -89,13 +89,13 @@ Estes guidelines ensinam o Claude sobre:
 - Arquitetura (Actions, Services, DTOs)
 - Estilo de código e convenções (PSR-12, Laravel Pint)
 - Padrões para Models Eloquent
-- Padrões do Filament (Resources, Forms, Tables)
 - Regras de validação (Form Requests SEMPRE obrigatórios)
 - API Resources (SEMPRE usar, exceto respostas muito simples)
 - Testes com Pest (expectations encadeadas, factories)
 - Commits (Conventional Commits)
+- Filament (Resources, Forms, Tables) - apenas se instalado
 
-Total: ~30 KB de guidelines essenciais e otimizados para performance.
+Total: 7-8 guidelines (~30-36 KB) - otimizado para performance.
 ```
 
 **Crie o diretório e faça download dos guidelines automaticamente:**
@@ -110,56 +110,54 @@ BASE_URL="https://raw.githubusercontent.com/$REPO/$BRANCH/guidelines"
 
 echo "📥 Baixando guidelines..."
 
-# Download dos guidelines essenciais
+# Download dos guidelines essenciais (sempre instalados)
 curl -fsSL "$BASE_URL/architecture.md" -o .ai/guidelines/architecture.md
 curl -fsSL "$BASE_URL/code-style.md" -o .ai/guidelines/code-style.md
 curl -fsSL "$BASE_URL/models.md" -o .ai/guidelines/models.md
-curl -fsSL "$BASE_URL/filament.md" -o .ai/guidelines/filament.md
 curl -fsSL "$BASE_URL/validation.md" -o .ai/guidelines/validation.md
 curl -fsSL "$BASE_URL/api.md" -o .ai/guidelines/api.md
 curl -fsSL "$BASE_URL/tests.md" -o .ai/guidelines/tests.md
 curl -fsSL "$BASE_URL/commits.md" -o .ai/guidelines/commits.md
 
+# Verificar se Filament está instalado
+if composer show filament/filament &>/dev/null; then
+    echo "🔍 Filament detectado - baixando guideline do Filament..."
+    curl -fsSL "$BASE_URL/filament.md" -o .ai/guidelines/filament.md
+fi
+
 echo "✅ Guidelines instalados!"
 ```
 
-**Liste os guidelines instalados:**
+**Liste os guidelines instalados e mostre um resumo:**
 
 ```bash
+# Listar arquivos instalados
+echo ""
+echo "📋 Guidelines instalados:"
 ls -lh .ai/guidelines/
-```
 
-**Mostre ao usuário um resumo:**
+# Contar guidelines
+GUIDELINES_COUNT=$(ls -1 .ai/guidelines/ | wc -l | xargs)
+TOTAL_SIZE=$(du -sh .ai/guidelines/ | cut -f1)
 
-```
-✅ 8 guidelines essenciais instalados com sucesso!
+echo ""
+echo "✅ $GUIDELINES_COUNT guidelines essenciais instalados com sucesso!"
+echo ""
+echo "📄 architecture.md - Actions, Services, DTOs"
+echo "📄 code-style.md - PSR-12, nomenclatura, type hints"
+echo "📄 models.md - Relationships, Scopes, Casts"
+echo "📄 validation.md - Form Requests (SEMPRE obrigatórios)"
+echo "📄 api.md - API Resources (SEMPRE usar)"
+echo "📄 tests.md - Pest, expectations encadeadas, factories"
+echo "📄 commits.md - Conventional Commits"
 
-📄 architecture.md (3.8 KB)
-   - Actions, Services, DTOs
-   - Regras de decisão (onde colocar código)
+# Mostrar Filament apenas se instalado
+if [ -f .ai/guidelines/filament.md ]; then
+    echo "📄 filament.md - Resources, Forms, Tables"
+fi
 
-📄 code-style.md (3.4 KB)
-   - PSR-12, nomenclatura, type hints
-
-📄 models.md (4.6 KB)
-   - Relationships, Scopes, Casts
-
-📄 filament.md (4.9 KB)
-   - Resources, Forms, Tables
-
-📄 validation.md (5.0 KB)
-   - Form Requests (SEMPRE obrigatórios)
-
-📄 api.md (4.5 KB)
-   - API Resources (SEMPRE usar)
-
-📄 tests.md (4.8 KB)
-   - Pest, expectations encadeadas, factories
-
-📄 commits.md (0.6 KB)
-   - Conventional Commits
-
-Total: ~31 KB (otimizado para performance, sem alertas)
+echo ""
+echo "Total: $TOTAL_SIZE (otimizado para performance, sem alertas)"
 ```
 
 Informe ao usuário:

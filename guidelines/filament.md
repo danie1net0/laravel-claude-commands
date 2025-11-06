@@ -4,8 +4,6 @@
 
 - **Métodos privados** - organizar schema, columns, actions
 - **Evitar aninhamento** - criar variáveis intermediárias
-- **Imports explícitos** - sempre importar classes completas
-- **DTOs com spatie/laravel-data** - para entrada/saída
 - **Actions customizadas** - lógica em Actions, não em pages
 - **Não usar model diretamente** - sempre via Actions
 
@@ -16,9 +14,7 @@ class UserResource extends Resource
 {
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema(self::formSchema())
-            ->actions(self::formActions());
+        return $form->schema(self::formSchema());
     }
 
     private static function formSchema(): array
@@ -55,8 +51,8 @@ class UserResource extends Resource
 
 ## Evitar Aninhamento
 
-**✅ Correto:**
 ```php
+// ✅ Correto:
 private static function formSchema(): array
 {
     $personalSchema[] = TextInput::make('name');
@@ -70,167 +66,52 @@ private static function formSchema(): array
 
     return $fields;
 }
-```
 
-**❌ Errado:**
-```php
+// ❌ Errado:
 return [
     Grid::make(2)->schema([
         TextInput::make('name'),
-        TextInput::make('email'),
+        Section::make('Endereço')->schema([
+            TextInput::make('street'),
+        ]),
     ]),
 ];
 ```
 
-## Imports
-
-**✅ Correto:**
-```php
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-
-$fields[] = TextInput::make('name');
-$fields[] = Select::make('role');
-```
-
-**❌ Errado:**
-```php
-$fields[] = Forms\Components\TextInput::make('name');
-```
-
-## Pages com Actions
-
-### CreateRecord
+## Campos Comuns
 
 ```php
-class CreateUser extends CreateRecord
-{
-    protected static string $resource = UserResource::class;
+TextInput::make('name')
+    ->label('Nome')
+    ->required()
+    ->maxLength(255);
 
-    protected function handleRecordCreation(array $data): Model
-    {
-        $input = new CreateUserData(
-            name: $data['name'],
-            email: $data['email'],
-            role: $data['role'],
-        );
+Select::make('status')
+    ->options(['active' => 'Ativo'])
+    ->required();
 
-        app(CreateUserAction::class)->execute($input);
+Textarea::make('bio')
+    ->rows(3)
+    ->maxLength(500);
 
-        return User::whereEmail($input->email)->first();
-    }
-}
-```
+DatePicker::make('birth_date')
+    ->native(false)
+    ->maxDate(now());
 
-### EditRecord
-
-```php
-class EditUser extends EditRecord
-{
-    protected static string $resource = UserResource::class;
-
-    protected function mutateFormDataBeforeFill(array $data): array
-    {
-        $data['role'] = $this->record->roles->first()?->name;
-        return $data;
-    }
-
-    protected function handleRecordUpdate(Model $record, array $data): Model
-    {
-        $input = new UpdateUserData(
-            id: $this->record->id,
-            name: $data['name'],
-            email: $data['email'],
-        );
-
-        app(UpdateUserAction::class)->execute($input);
-
-        return $record->refresh();
-    }
-}
-```
-
-## DTOs
-
-```php
-use Spatie\LaravelData\Data;
-
-class CreateUserData extends Data
-{
-    public function __construct(
-        public string $name,
-        public string $email,
-        public string $role,
-        public array $permissions = [],
-    ) {}
-}
-```
-
-## Actions
-
-```php
-class CreateUserAction
-{
-    public function execute(CreateUserData $data): User
-    {
-        $user = User::create([
-            'name' => $data->name,
-            'email' => $data->email,
-        ]);
-
-        $user->assignRole($data->role);
-
-        if (!empty($data->permissions)) {
-            $user->givePermissionTo($data->permissions);
-        }
-
-        return $user;
-    }
-}
+FileUpload::make('avatar')
+    ->image()
+    ->maxSize(1024);
 ```
 
 ## Boas Práticas
 
-### Organização
-
 ```php
-✅ private static function formSchema(): array
-✅ private static function tableColumns(): array
-✅ private static function tableFilters(): array
-❌ Tudo direto no método form() ou table()
+✅ Métodos privados para schema/columns
+✅ Variáveis intermediárias
+✅ Labels em português
+✅ Actions para lógica
+
+❌ Aninhamento profundo
+❌ Lógica no Resource
+❌ Model::create() direto
 ```
-
-### Aninhamento
-
-```php
-✅ $gridSchema[] = TextInput::make('name');
-✅ $fields[] = Grid::make()->schema($gridSchema);
-❌ Grid::make()->schema([TextInput::make('name')])
-```
-
-### Imports
-
-```php
-✅ use Filament\Forms\Components\TextInput;
-✅ TextInput::make('name')
-❌ Forms\Components\TextInput::make('name')
-```
-
-### DTOs e Actions
-
-```php
-✅ new CreateUserData(...)
-✅ app(CreateUserAction::class)->execute($data)
-❌ User::create($data) direto na page
-```
-
-## Checklist
-
-- [ ] Métodos privados para schema, columns, actions?
-- [ ] Evitando aninhamento de arrays?
-- [ ] Imports explícitos?
-- [ ] DTOs criados com spatie/laravel-data?
-- [ ] Actions criadas para create/update/delete?
-- [ ] Lógica de negócio nas Actions?
-- [ ] mutateFormDataBeforeFill quando necessário?
-- [ ] Labels em português?

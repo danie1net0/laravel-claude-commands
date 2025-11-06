@@ -12,6 +12,7 @@ COMMANDS=(
     "setup-laravel-packages.md"
     "setup-filament.md"
     "setup-ci.md"
+    "update-guidelines.md"
 )
 
 print_header() {
@@ -71,6 +72,7 @@ install_local() {
     echo "  • /setup-laravel-packages"
     echo "  • /setup-filament"
     echo "  • /setup-ci"
+    echo "  • /update-guidelines"
 }
 
 install_global() {
@@ -99,9 +101,10 @@ install_commands() {
     echo "  4) setup-laravel-packages - Pacotes essenciais do Laravel"
     echo "  5) setup-filament         - Filament v4 Admin Panel"
     echo "  6) setup-ci               - GitHub Actions & GitLab CI"
-    echo "  7) Personalizado (escolher múltiplos)"
+    echo "  7) update-guidelines      - Atualizar guidelines instalados"
+    echo "  8) Personalizado (escolher múltiplos)"
     echo ""
-    read -p "Opção (1-7): " option
+    read -p "Opção (1-8): " option
     echo ""
 
     case $option in
@@ -126,12 +129,16 @@ install_commands() {
             download_command "setup-ci.md" "$target_dir"
             ;;
         7)
-            echo "Digite os números dos comandos separados por espaço (ex: 2 4 5):"
+            download_command "update-guidelines.md" "$target_dir"
+            ;;
+        8)
+            echo "Digite os números dos comandos separados por espaço (ex: 2 4 7):"
             echo "  2) setup-quality-tools"
             echo "  3) setup-laravel-boost"
             echo "  4) setup-laravel-packages"
             echo "  5) setup-filament"
             echo "  6) setup-ci"
+            echo "  7) update-guidelines"
             echo ""
             read -p "Comandos: " selections
             echo ""
@@ -143,6 +150,7 @@ install_commands() {
                     4) download_command "setup-laravel-packages.md" "$target_dir" ;;
                     5) download_command "setup-filament.md" "$target_dir" ;;
                     6) download_command "setup-ci.md" "$target_dir" ;;
+                    7) download_command "update-guidelines.md" "$target_dir" ;;
                     *) echo "⚠️  Opção $num inválida, ignorando..." ;;
                 esac
             done
